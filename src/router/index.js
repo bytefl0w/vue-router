@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import EventList from "../views/EventList.vue";
-import EventDetails from "@/views/EventDetails.vue";
+import EventLayout from "../views/event/Layout.vue";
+import EventDetails from "@/views/event/Details.vue";
+import EventRegister from "../views/event/Register.vue";
+import EventEdit from "@/views/event/Edit.vue";
 import About from "../views/About.vue";
 const routes = [
   {
@@ -10,10 +13,30 @@ const routes = [
     props: route => ({ page: parseInt(route.query.page) || 1}) // Props Function Mode (short hand for JS anonymous funciton)
   },
   {
+    // NOTE: Since :id is required for each child path, If :id isn't sent in, it will
+    // look and use the :id param that is present. Therefore, in Layout.vue, we don't
+    // need to put param: { id } for each router-link
     path: "/event/:id",
-    name: "EventDetails",
+    name: "EventLayout",
     props: true,
-    component: EventDetails
+    component: EventLayout,
+    children: [
+      {
+        path: "",
+        name: "EventDetails",
+        component: EventDetails,
+      },
+      {
+        path: "register",
+        name: "EventRegister",
+        component: EventRegister
+      },
+      {
+         path: "edit",
+         name: "EventEdit",
+         component: EventEdit
+      },
+    ]
   },
   {
     path: "/about",
