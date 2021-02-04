@@ -6,7 +6,8 @@ const routes = [
   {
     path: "/",
     name: "EventList",
-    component: EventList
+    component: EventList,
+    props: route => ({ page: parseInt(route.query.page) || 1}) // Props Function Mode (short hand for JS anonymous funciton)
   },
   {
     path: "/event/:id",
