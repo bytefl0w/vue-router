@@ -16,7 +16,7 @@ const routes = [
     // NOTE: Since :id is required for each child path, If :id isn't sent in, it will
     // look and use the :id param that is present. Therefore, in Layout.vue, we don't
     // need to put param: { id } for each router-link
-    path: "/event/:id",
+    path: "/events/:id",
     name: "EventLayout",
     props: true,
     component: EventLayout,
@@ -37,6 +37,12 @@ const routes = [
          component: EventEdit
       },
     ]
+  },
+  { 
+    path: '/event/:afterEvent(.*)', // Example problem, if we want to change from old event path to events.
+    redirect: to => { // Replace event with events and and all params after event to URL, then redirect
+      return { path: '/events/' + to.params.afterEvent }
+    }
   },
   {
     path: "/about",
